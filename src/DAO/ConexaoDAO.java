@@ -13,7 +13,7 @@ public class ConexaoDAO {
 		Connection conn = null;
 		
 		try {
-			String url = "jdbc:mysql://localhost:3306/g4fdatabase?user=root&password=";
+			String url = "jdbc:mysql://localhost:3306/[NOME BANCO DE DADOS]?user=root&password=";
 			conn = DriverManager.getConnection(url);
 			
 		} catch (SQLException e) {
