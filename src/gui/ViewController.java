@@ -1,5 +1,8 @@
 package gui;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 import DTO.Medico;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
@@ -50,18 +53,18 @@ public class ViewController {
 	private ChoiceBox<String> CRMChoiceBox;
 	@FXML
 	private ChoiceBox<String> municipioChoiceBox;
-
-
+	@FXML
+	private ChoiceBox<String> especialidadeChoiceBox;
+	@FXML
+	private ChoiceBox<String> atuacaoChoiceBox;
 
 
 	@FXML
 	public void initialize() {
-		gerarChoiceBoxCRM();
-		gerarChoiceBoxMunicipio();
+		gerarChoiceBoxes();
 		listarValores();
 	}
 
-	// Event Listener on Button[#btnCadastrar].onAction
 	@FXML
 	public void btnCadastrarActionPerformed(ActionEvent event) {
 		cadastrarFuncionario();
@@ -97,16 +100,16 @@ public class ViewController {
 		crm = txtCRM.getText();
 		municipio = municipioChoiceBox.getValue();
 		statusCRM = CRMChoiceBox.getValue();
-		//especialidade = cargoChoiceBox.getValue();
-		//areaAtuacao = cargoChoiceBox.getValue();
+		especialidade = especialidadeChoiceBox.getValue();
+		areaAtuacao = atuacaoChoiceBox.getValue();
 
 		Medico objMedicoDTO = new MedicoDTO();
 		objMedicoDTO.setNomeMedico(nome);
 		objMedicoDTO.setCRM(crm);
 		objMedicoDTO.setMunicipio(municipio);
 		objMedicoDTO.setStatusCRM(statusCRM);
-		objMedicoDTO.setEspecialidade("Especialidade Aleatória");
-		objMedicoDTO.setAreaAtuacao("Área de Atuação Aleatória");
+		objMedicoDTO.setEspecialidade(especialidade);
+		objMedicoDTO.setAreaAtuacao(areaAtuacao);
 
 		MedicoDAO objMedicoDAO = new MedicoDAO();
 		objMedicoDAO.cadastrarMedico(objMedicoDTO);
@@ -139,21 +142,13 @@ public class ViewController {
 			txtCRM.setText(selectedMedico.getCRM());
 			CRMChoiceBox.setValue(selectedMedico.getStatusCRM());
 			municipioChoiceBox.setValue(selectedMedico.getMunicipio());
+			especialidadeChoiceBox.setValue(selectedMedico.getEspecialidade());
+			atuacaoChoiceBox.setValue(selectedMedico.getAreaAtuacao());
 			txtNome.requestFocus();
 		}
 	}
 
-	private void gerarChoiceBoxCRM() {
-		ObservableList<String> status_crm = FXCollections.observableArrayList(
-				"Ativo",
-				"Inativo"
-		);
-
-		CRMChoiceBox.setItems(status_crm);
-		CRMChoiceBox.setValue("Selecione a situação do CRM");
-	}
-
-	private void gerarChoiceBoxMunicipio() {
+	private void gerarChoiceBoxes() {
 		ObservableList<String> municipio = FXCollections.observableArrayList(
 				"Recife (capital do estado)",
 				"Jaboatão dos Guararapes",
@@ -170,6 +165,50 @@ public class ViewController {
 
 		municipioChoiceBox.setItems(municipio);
 		municipioChoiceBox.setValue("Selecione o município");
+
+
+		ObservableList<String> status_crm = FXCollections.observableArrayList(
+				"Ativo",
+				"Inativo"
+		);
+
+		CRMChoiceBox.setItems(status_crm);
+		CRMChoiceBox.setValue("Selecione a situação do CRM");
+
+
+
+		ObservableList<String> especialidade = FXCollections.observableArrayList(
+				"Clínica Geral",
+				"Pediatria",
+				"Ginecologia",
+				"Cardiologia",
+				"Dermatologia",
+				"Ortopedia",
+				"Oftalmologia",
+				"Otorrinolaringologia",
+				"Psiquiatria",
+				"Neurologia"
+		);
+
+		especialidadeChoiceBox.setItems(especialidade);
+		especialidadeChoiceBox.setValue("Selecione a especialidade");
+
+
+		ObservableList<String> areaAtuacao = FXCollections.observableArrayList(
+				"Administração em saúde",
+				"Alergia e Imunologia Pediátrica",
+				"Cardiologia Pediátrica",
+				"Ecocardiografia",
+				"Emergência Pediátrica",
+				"Infectologia Hospitalar",
+				"Neonatologia",
+				"Nutrição Parenteral e Enteral",
+				"Psicoterapia",
+				"Radiologia Intervencionista"
+		);
+
+		atuacaoChoiceBox.setItems(areaAtuacao);
+		atuacaoChoiceBox.setValue("Selecione a área de atuação");
 	}
 
 	private void limparCampos() {
@@ -178,6 +217,8 @@ public class ViewController {
 		txtNome.requestFocus();
 		CRMChoiceBox.setValue("Selecione a situação do CRM");
 		municipioChoiceBox.setValue("Selecione um município");
+		especialidadeChoiceBox.setValue("Selecione a especialidade");
+		atuacaoChoiceBox.setValue("Selecione a área de atuação");
 	}
 
 	private void updateFuncionario() {
@@ -191,6 +232,8 @@ public class ViewController {
 			String CRM = txtCRM.getText();
 			String situacaoCRM = CRMChoiceBox.getValue();
 			String municipio = municipioChoiceBox.getValue();
+			String especialidade = especialidadeChoiceBox.getValue();
+			String areaAtuacao = atuacaoChoiceBox.getValue();
 
 
 			objMedicoDTO.setIdMedico(idFuncionario);
@@ -198,8 +241,8 @@ public class ViewController {
 			objMedicoDTO.setCRM(CRM);
 			objMedicoDTO.setStatusCRM(situacaoCRM);
 			objMedicoDTO.setMunicipio(municipio);
-			//objMedicoDTO.setEspecialidade("Especialidade Aleatória");
-			//objMedicoDTO.setAreaAtuacao("Área de Atuação Aleatória");
+			objMedicoDTO.setEspecialidade(especialidade);
+			objMedicoDTO.setAreaAtuacao(areaAtuacao);
 
 			objMedicoDAO.updateFuncionario(objMedicoDTO);
 		}else {

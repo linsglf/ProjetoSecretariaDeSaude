@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane minHeight="500.0" minWidth="600.0" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewController">
@@ -42,6 +43,16 @@
             </columns>
         </TableView>
       <Label layoutX="303.0" layoutY="67.0" prefHeight="18.0" prefWidth="78.0" text="Município:" />
-      <ChoiceBox fx:id="municipioChoiceBox" layoutX="303.0" layoutY="99.0" prefHeight="26.0" prefWidth="234.0" />
+      <ChoiceBox fx:id="municipioChoiceBox" layoutX="303.0" layoutY="99.0" prefHeight="26.0" prefWidth="234.0" AnchorPane.leftAnchor="303.0" />
+      <ChoiceBox fx:id="especialidadeChoiceBox" layoutX="543.0" layoutY="99.0" prefHeight="26.0" prefWidth="234.0" />
+      <Label layoutX="543.0" layoutY="67.0" prefHeight="18.0" prefWidth="78.0" text="Especialidade:" />
+      <ToolBar layoutX="63.0" layoutY="320.0" prefHeight="40.0" prefWidth="952.0">
+        <items>
+          <Button mnemonicParsing="false" text="Button" />
+            <TextField prefHeight="2.0" prefWidth="150.0" />
+        </items>
+      </ToolBar>
+      <ChoiceBox fx:id="atuacaoChoiceBox" layoutX="543.0" layoutY="199.0" prefHeight="26.0" prefWidth="234.0" />
+      <Label layoutX="547.0" layoutY="168.0" prefHeight="18.0" prefWidth="90.0" text="Área de atuação:" />
     </children>
 </AnchorPane>
