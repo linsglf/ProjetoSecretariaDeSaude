@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Desktop/mysql-connector-j-8.0.33/mysql-connector-j-8.0.33/mysql-connector-j-8.0.33.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://C:/java-libs/javafx-sdk-17.0.8/src.zip!/javafx.base" />
+          <root url="jar://C:/java-libs/javafx-sdk-17.0.8/src.zip!/javafx.controls" />
+          <root url="jar://C:/java-libs/javafx-sdk-17.0.8/src.zip!/javafx.fxml" />
+          <root url="jar://C:/java-libs/javafx-sdk-17.0.8/src.zip!/javafx.graphics" />
+          <root url="jar://C:/java-libs/javafx-sdk-17.0.8/src.zip!/javafx.media" />
+          <root url="jar://C:/java-libs/javafx-sdk-17.0.8/src.zip!/javafx.swing" />
+          <root url="jar://C:/java-libs/javafx-sdk-17.0.8/src.zip!/javafx.web" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="lib" level="project" />
+  </component>
+</module>
