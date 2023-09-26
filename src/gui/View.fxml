@@ -46,10 +46,10 @@
       <ChoiceBox fx:id="municipioChoiceBox" layoutX="303.0" layoutY="99.0" prefHeight="26.0" prefWidth="234.0" AnchorPane.leftAnchor="303.0" />
       <ChoiceBox fx:id="especialidadeChoiceBox" layoutX="543.0" layoutY="99.0" prefHeight="26.0" prefWidth="234.0" />
       <Label layoutX="543.0" layoutY="67.0" prefHeight="18.0" prefWidth="78.0" text="Especialidade:" />
-      <ToolBar layoutX="63.0" layoutY="320.0" prefHeight="40.0" prefWidth="952.0">
+      <ToolBar layoutX="63.0" layoutY="326.0" prefHeight="35.0" prefWidth="952.0">
         <items>
           <Button mnemonicParsing="false" text="Button" />
-            <TextField prefHeight="2.0" prefWidth="150.0" />
+            <TextField prefHeight="13.0" prefWidth="150.0" />
         </items>
       </ToolBar>
       <ChoiceBox fx:id="atuacaoChoiceBox" layoutX="543.0" layoutY="199.0" prefHeight="26.0" prefWidth="234.0" />

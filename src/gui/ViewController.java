@@ -67,7 +67,7 @@ public class ViewController {
 
 	@FXML
 	public void btnCadastrarActionPerformed(ActionEvent event) {
-		cadastrarFuncionario();
+		cadastrarMedico();
 		listarValores();
 	}
 
@@ -82,18 +82,18 @@ public class ViewController {
 	}
 	@FXML
 	public void btnUpdateTableValue(ActionEvent event) {
-		updateFuncionario();
+		updateMedico();
 		listarValores();
 		limparCampos();
 	}
 
 	@FXML
 	void btnDeleteAction(ActionEvent event) {
-		deleteFuncionario();
+		deleteMedico();
 		listarValores();
 	}
 
-	private void cadastrarFuncionario() {
+	private void cadastrarMedico() {
 		String nome, crm, municipio, statusCRM, especialidade, areaAtuacao;
 
 		nome = txtNome.getText();
@@ -221,7 +221,7 @@ public class ViewController {
 		atuacaoChoiceBox.setValue("Selecione a área de atuação");
 	}
 
-	private void updateFuncionario() {
+	private void updateMedico() {
 		Medico selectedMedico = tabelaMedico.getSelectionModel().getSelectedItem();
 		Medico objMedicoDTO = new MedicoDTO();
 		MedicoDAO objMedicoDAO = new MedicoDAO();
@@ -250,7 +250,7 @@ public class ViewController {
 		}
 	}
 
-	private void deleteFuncionario() {
+	private void deleteMedico() {
 		Medico selectedMedico = tabelaMedico.getSelectionModel().getSelectedItem();
 		Medico objMedicoDTO = new MedicoDTO();
 		MedicoDAO objMedicoDAO = new MedicoDAO();
