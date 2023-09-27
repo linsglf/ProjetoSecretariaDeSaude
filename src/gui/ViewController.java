@@ -1,7 +1,5 @@
 package gui;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
 
 import DTO.Medico;
 import gui.util.Alerts;
@@ -34,9 +32,9 @@ public class ViewController {
 	@FXML
 	private Button btnDelete;
 	@FXML
-	private TableView<Medico> tabelaMedico;
+	private Button btnPesquisar;
 	@FXML
-	private TableColumn<Medico, Integer> idColumn;
+	private TableView<Medico> tabelaMedico;
 	@FXML
 	private TableColumn<Medico, String> nomeColumn;
 	@FXML
@@ -57,6 +55,24 @@ public class ViewController {
 	private ChoiceBox<String> especialidadeChoiceBox;
 	@FXML
 	private ChoiceBox<String> atuacaoChoiceBox;
+	@FXML
+	private TextField searchBar;
+	@FXML
+	private CheckBox checkMunicipio;
+	@FXML
+	private ChoiceBox<String> filtroMunicipio;
+	@FXML
+	private CheckBox checkCRM;
+	@FXML
+	private ChoiceBox<String> filtroCRM;
+	@FXML
+	private CheckBox checkEspecialidade;
+	@FXML
+	private ChoiceBox<String> filtroEspecialidade;
+	@FXML
+	private CheckBox checkArea;
+	@FXML
+	private ChoiceBox<String> filtroArea;
 
 
 	@FXML
@@ -93,6 +109,11 @@ public class ViewController {
 		listarValores();
 	}
 
+	@FXML
+	void btnSearchAction(ActionEvent event) {
+		pesquisaCheckBox();
+	}
+
 	private void cadastrarMedico() {
 		String nome, crm, municipio, statusCRM, especialidade, areaAtuacao;
 
@@ -120,7 +141,6 @@ public class ViewController {
 			MedicoDAO objMedicoDAO = new MedicoDAO();
 			List<Medico> listaMedicos = objMedicoDAO.listarMedico();
 
-			idColumn.setCellValueFactory(new PropertyValueFactory<>("idMedico"));
 			nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMedico"));
 			CRMColumn.setCellValueFactory(new PropertyValueFactory<>("CRM"));
 			municipioColumn.setCellValueFactory(new PropertyValueFactory<>("municipio"));
@@ -209,6 +229,18 @@ public class ViewController {
 
 		atuacaoChoiceBox.setItems(areaAtuacao);
 		atuacaoChoiceBox.setValue("Selecione a área de atuação");
+
+		filtroMunicipio.setItems(municipio);
+		filtroMunicipio.setValue("Selecione o município");
+
+		filtroCRM.setItems(status_crm);
+		filtroCRM.setValue("Selecione a situação do CRM");
+
+		filtroEspecialidade.setItems(especialidade);
+		filtroEspecialidade.setValue("Selecione a especialidade");
+
+		filtroArea.setItems(areaAtuacao);
+		filtroArea.setValue("Selecione a área de atuação");
 	}
 
 	private void limparCampos() {
@@ -219,6 +251,7 @@ public class ViewController {
 		municipioChoiceBox.setValue("Selecione um município");
 		especialidadeChoiceBox.setValue("Selecione a especialidade");
 		atuacaoChoiceBox.setValue("Selecione a área de atuação");
+		listarValores();
 	}
 
 	private void updateMedico() {
@@ -262,6 +295,61 @@ public class ViewController {
 			objMedicoDAO.deletFuncionario(objMedicoDTO);
 		}else {
 			Alerts.showAlert("Delete ERROR", null,"Unable to delete!", Alert.AlertType.ERROR);
+		}
+	}
+
+	public void pesquisaCheckBox() {
+		String pesquisa = searchBar.getText();
+		String municipio, crm, especialidade, area;
+
+		if (checkMunicipio.isSelected()) {
+			municipio = filtroMunicipio.getValue();
+			System.out.println(municipio);
+		} else {
+			municipio = null;
+			System.out.println(municipio);
+		}
+
+		if (checkCRM.isSelected()) {
+			crm = filtroCRM.getValue();
+			System.out.println(crm);
+		} else {
+			crm = null;
+			System.out.println(crm);
+		}
+
+		if (checkEspecialidade.isSelected()) {
+			especialidade = filtroEspecialidade.getValue();
+			System.out.println(especialidade);
+		} else {
+			especialidade = null;
+			System.out.println(especialidade);
+		}
+
+		if (checkArea.isSelected()) {
+			area = filtroArea.getValue();
+			System.out.println(area);
+		} else {
+			area = null;
+			System.out.println(area);
+		}
+
+		System.out.println(pesquisa);
+
+		try	{
+			MedicoDAO objMedicoDAO = new MedicoDAO();
+			List<Medico> listaMedicos = objMedicoDAO.pesquisarMedico(pesquisa, municipio, crm, especialidade, area);
+
+			nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMedico"));
+			CRMColumn.setCellValueFactory(new PropertyValueFactory<>("CRM"));
+			municipioColumn.setCellValueFactory(new PropertyValueFactory<>("municipio"));
+			situacaoCRMColumn.setCellValueFactory(new PropertyValueFactory<>("statusCRM"));
+			especialidadeColumn.setCellValueFactory(new PropertyValueFactory<>("especialidade"));
+			areaColumn.setCellValueFactory(new PropertyValueFactory<>("areaAtuacao"));
+
+			tabelaMedico.setItems(FXCollections.observableArrayList(listaMedicos));
+		} catch (Exception e) {
+			Alerts.showAlert("Error", null,"PESQUISA" + e.getMessage(), Alert.AlertType.ERROR);
 		}
 	}
 }

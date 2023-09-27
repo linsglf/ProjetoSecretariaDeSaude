@@ -104,4 +104,59 @@ public class MedicoDAO {
 			Alerts.showAlert("Error", null,"MedicoDAO Update" + e.getMessage(), AlertType.ERROR);
 		}
 	}
+
+	public ArrayList<Medico> pesquisarMedico(String pesquisa, String municipio, String statusCRM, String especialidade, String areaAtuacao) {
+		if (municipio == null) {
+			municipio = "";
+		}
+		if (statusCRM == null) {
+			statusCRM = "";
+		}
+		if (especialidade == null) {
+			especialidade = "";
+		}
+		if (areaAtuacao == null) {
+			areaAtuacao = "";
+		}
+
+		String sql =
+				"SELECT * FROM medico WHERE (nome_medico LIKE ? OR crm_medico LIKE ?)" +
+				" AND (municipio_medico LIKE ?)" +
+				" AND (especialidade_medico LIKE ?)" +
+				" AND (area_medico LIKE ?)" +
+				" AND (crm_status_medico = ? OR ? = '');";
+
+		conn = new ConexaoDAO().conectaBD();
+
+		try{
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, "%" + pesquisa + "%");
+			pstm.setString(2, "%" + pesquisa + "%");
+			pstm.setString(3, "%" + municipio + "%");
+			pstm.setString(4, "%" + especialidade + "%");
+			pstm.setString(5, "%" + areaAtuacao + "%");
+			pstm.setString(6, statusCRM);
+			pstm.setString(7, statusCRM);
+
+
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				MedicoDTO objMedicoDTO = new MedicoDTO();
+				objMedicoDTO.setIdMedico(rs.getInt("id_medico"));
+				objMedicoDTO.setNomeMedico(rs.getString("nome_medico"));
+				objMedicoDTO.setCRM(rs.getString("crm_medico"));
+				objMedicoDTO.setMunicipio(rs.getString("municipio_medico"));
+				objMedicoDTO.setStatusCRM(rs.getString("crm_status_medico"));
+				objMedicoDTO.setEspecialidade(rs.getString("especialidade_medico"));
+				objMedicoDTO.setAreaAtuacao(rs.getString("area_medico"));
+
+				lista.add(objMedicoDTO);
+			}
+		} catch (SQLException e) {
+			Alerts.showAlert("Error", null,"MedicoDAO Pesquisar:" + e.getMessage(), AlertType.ERROR);
+		}
+
+		return lista;
+	}
 }
