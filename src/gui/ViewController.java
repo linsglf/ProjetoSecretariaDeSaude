@@ -1,12 +1,15 @@
 package gui;
 
 
+import DAO.MunicipioDAO;
 import DTO.Medico;
+import DTO.MunicipioDTO;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
 import DAO.MedicoDAO;
@@ -14,6 +17,7 @@ import DTO.MedicoDTO;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ViewController {
@@ -73,11 +77,46 @@ public class ViewController {
 	private CheckBox checkArea;
 	@FXML
 	private ChoiceBox<String> filtroArea;
+	@FXML
+	private Button btnTeste;
 
+	ObservableList<String> municipio = FXCollections.observableArrayList();
+
+	ObservableList<String> especialidade = FXCollections.observableArrayList(
+			"Clínica Geral",
+			"Pediatria",
+			"Ginecologia",
+			"Cardiologia",
+			"Dermatologia",
+			"Ortopedia",
+			"Oftalmologia",
+			"Otorrinolaringologia",
+			"Psiquiatria",
+			"Neurologia"
+	);
+
+	ObservableList<String> status_crm = FXCollections.observableArrayList(
+			"Ativo",
+			"Inativo"
+	);
+
+	ObservableList<String> areaAtuacao = FXCollections.observableArrayList(
+			"Administração em saúde",
+			"Alergia e Imunologia Pediátrica",
+			"Cardiologia Pediátrica",
+			"Ecocardiografia",
+			"Emergência Pediátrica",
+			"Infectologia Hospitalar",
+			"Neonatologia",
+			"Nutrição Parenteral e Enteral",
+			"Psicoterapia",
+			"Radiologia Intervencionista"
+	);
 
 	@FXML
 	public void initialize() {
 		gerarChoiceBoxes();
+		listaDeMunicipios();
 		listarValores();
 	}
 
@@ -136,19 +175,21 @@ public class ViewController {
 		objMedicoDAO.cadastrarMedico(objMedicoDTO);
 	}
 
+	private void listarMedico(List<Medico> listaMedicos) {
+		nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMedico"));
+		CRMColumn.setCellValueFactory(new PropertyValueFactory<>("CRM"));
+		municipioColumn.setCellValueFactory(new PropertyValueFactory<>("municipio"));
+		situacaoCRMColumn.setCellValueFactory(new PropertyValueFactory<>("statusCRM"));
+		especialidadeColumn.setCellValueFactory(new PropertyValueFactory<>("especialidade"));
+		areaColumn.setCellValueFactory(new PropertyValueFactory<>("areaAtuacao"));
+
+		tabelaMedico.setItems(FXCollections.observableArrayList(listaMedicos));
+	}
+
 	private void listarValores() {
 		try	{
-			MedicoDAO objMedicoDAO = new MedicoDAO();
-			List<Medico> listaMedicos = objMedicoDAO.listarMedico();
-
-			nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMedico"));
-			CRMColumn.setCellValueFactory(new PropertyValueFactory<>("CRM"));
-			municipioColumn.setCellValueFactory(new PropertyValueFactory<>("municipio"));
-			situacaoCRMColumn.setCellValueFactory(new PropertyValueFactory<>("statusCRM"));
-			especialidadeColumn.setCellValueFactory(new PropertyValueFactory<>("especialidade"));
-			areaColumn.setCellValueFactory(new PropertyValueFactory<>("areaAtuacao"));
-
-			tabelaMedico.setItems(FXCollections.observableArrayList(listaMedicos));
+			List<Medico> listaMedicos = new MedicoDAO().listarMedico();
+			listarMedico(listaMedicos);
 		} catch (Exception e) {
 			Alerts.showAlert("Error", null,"VIEW TABLE" + e.getMessage(), Alert.AlertType.ERROR);
 		}
@@ -169,63 +210,14 @@ public class ViewController {
 	}
 
 	private void gerarChoiceBoxes() {
-		ObservableList<String> municipio = FXCollections.observableArrayList(
-				"Recife (capital do estado)",
-				"Jaboatão dos Guararapes",
-				"Olinda",
-				"Caruaru",
-				"Floresta",
-				"Petrolina",
-				"Paulista",
-				"Cabo de Santo Agostinho",
-				"Camaragibe",
-				"Garanhuns",
-				"Vitória de Santo Antão"
-		);
-
 		municipioChoiceBox.setItems(municipio);
 		municipioChoiceBox.setValue("Selecione o município");
-
-
-		ObservableList<String> status_crm = FXCollections.observableArrayList(
-				"Ativo",
-				"Inativo"
-		);
 
 		CRMChoiceBox.setItems(status_crm);
 		CRMChoiceBox.setValue("Selecione a situação do CRM");
 
-
-
-		ObservableList<String> especialidade = FXCollections.observableArrayList(
-				"Clínica Geral",
-				"Pediatria",
-				"Ginecologia",
-				"Cardiologia",
-				"Dermatologia",
-				"Ortopedia",
-				"Oftalmologia",
-				"Otorrinolaringologia",
-				"Psiquiatria",
-				"Neurologia"
-		);
-
 		especialidadeChoiceBox.setItems(especialidade);
 		especialidadeChoiceBox.setValue("Selecione a especialidade");
-
-
-		ObservableList<String> areaAtuacao = FXCollections.observableArrayList(
-				"Administração em saúde",
-				"Alergia e Imunologia Pediátrica",
-				"Cardiologia Pediátrica",
-				"Ecocardiografia",
-				"Emergência Pediátrica",
-				"Infectologia Hospitalar",
-				"Neonatologia",
-				"Nutrição Parenteral e Enteral",
-				"Psicoterapia",
-				"Radiologia Intervencionista"
-		);
 
 		atuacaoChoiceBox.setItems(areaAtuacao);
 		atuacaoChoiceBox.setValue("Selecione a área de atuação");
@@ -292,7 +284,7 @@ public class ViewController {
 			int idFuncionario = selectedMedico.getIdMedico();
 			objMedicoDTO.setIdMedico(idFuncionario);
 
-			objMedicoDAO.deletFuncionario(objMedicoDTO);
+			objMedicoDAO.deleteFuncionario(objMedicoDTO);
 		}else {
 			Alerts.showAlert("Delete ERROR", null,"Unable to delete!", Alert.AlertType.ERROR);
 		}
@@ -340,16 +332,22 @@ public class ViewController {
 			MedicoDAO objMedicoDAO = new MedicoDAO();
 			List<Medico> listaMedicos = objMedicoDAO.pesquisarMedico(pesquisa, municipio, crm, especialidade, area);
 
-			nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMedico"));
-			CRMColumn.setCellValueFactory(new PropertyValueFactory<>("CRM"));
-			municipioColumn.setCellValueFactory(new PropertyValueFactory<>("municipio"));
-			situacaoCRMColumn.setCellValueFactory(new PropertyValueFactory<>("statusCRM"));
-			especialidadeColumn.setCellValueFactory(new PropertyValueFactory<>("especialidade"));
-			areaColumn.setCellValueFactory(new PropertyValueFactory<>("areaAtuacao"));
-
-			tabelaMedico.setItems(FXCollections.observableArrayList(listaMedicos));
+			listarMedico(listaMedicos);
 		} catch (Exception e) {
 			Alerts.showAlert("Error", null,"PESQUISA" + e.getMessage(), Alert.AlertType.ERROR);
+		}
+	}
+
+	private void listaDeMunicipios() {
+		try	{
+			List<MunicipioDTO> listaMunicipio = new MunicipioDAO().listarMunicipios();
+			municipio.clear();
+
+			for (MunicipioDTO municipioDTO : listaMunicipio) {
+				municipio.add(municipioDTO.getNomeMunicipio());
+			}
+		} catch (Exception e) {
+			Alerts.showAlert("Error", null,"VIEW TABLE" + e.getMessage(), Alert.AlertType.ERROR);
 		}
 	}
 }

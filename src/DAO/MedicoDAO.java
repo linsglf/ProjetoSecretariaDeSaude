@@ -81,7 +81,6 @@ public class MedicoDAO {
 			pstm.setString(6, objMedicoDTO.getAreaAtuacao());
 			pstm.setInt(7, objMedicoDTO.getIdMedico());
 
-
 			pstm.execute();
 			pstm.close();
 		} catch (Exception e) {
@@ -89,7 +88,7 @@ public class MedicoDAO {
 		}
 	}
 
-	public void deletFuncionario(Medico objMedicoDTO) {
+	public void deleteFuncionario(Medico objMedicoDTO) {
 		String sql = "DELETE FROM medico WHERE id_medico = ?;";
 
 		conn = new ConexaoDAO().conectaBD();
@@ -101,7 +100,7 @@ public class MedicoDAO {
 			pstm.execute();
 			pstm.close();
 		} catch (SQLException e) {
-			Alerts.showAlert("Error", null,"MedicoDAO Update" + e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("Error", null,"MedicoDAO Delete" + e.getMessage(), AlertType.ERROR);
 		}
 	}
 
