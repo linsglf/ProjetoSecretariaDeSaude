@@ -39,6 +39,16 @@ public class MunicipioController {
         listarValoresMunicipios();
     }
 
+    private void criarMunicipio() {
+        String nomeMunicipio = municipioTxtField.getText();
+
+        MunicipioDTO objMunicipioDTO = new MunicipioDTO();
+        objMunicipioDTO.setNomeMunicipio(nomeMunicipio);
+
+        MunicipioDAO objMunicipioDAO = new MunicipioDAO();
+        objMunicipioDAO.cadastrarMunicipio(objMunicipioDTO);
+    }
+
     @FXML
     public void btnEditAction(ActionEvent event) {
         editarCampos();
@@ -113,15 +123,5 @@ public class MunicipioController {
         } catch (Exception e) {
             Alerts.showAlert("Error", null,"VIEW TABLE MUNICIPIO" + e.getMessage(), Alert.AlertType.ERROR);
         }
-    }
-
-    private void criarMunicipio() {
-        String nomeMunicipio = municipioTxtField.getText();
-
-        MunicipioDTO objMunicipioDTO = new MunicipioDTO();
-        objMunicipioDTO.setNomeMunicipio(nomeMunicipio);
-
-        MunicipioDAO objMunicipioDAO = new MunicipioDAO();
-        objMunicipioDAO.cadastrarMunicipio(objMunicipioDTO);
     }
 }
