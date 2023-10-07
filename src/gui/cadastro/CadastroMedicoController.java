@@ -1,7 +1,9 @@
-package gui;
+package gui.cadastro;
 
 
+import DAO.EspecialidadeDAO;
 import DAO.MunicipioDAO;
+import DTO.EspecialidadeDTO;
 import DTO.Medico;
 import DTO.MunicipioDTO;
 import gui.util.Alerts;
@@ -80,18 +82,7 @@ public class CadastroMedicoController {
 
 	ObservableList<String> municipio = FXCollections.observableArrayList();
 
-	ObservableList<String> especialidade = FXCollections.observableArrayList(
-			"Clínica Geral",
-			"Pediatria",
-			"Ginecologia",
-			"Cardiologia",
-			"Dermatologia",
-			"Ortopedia",
-			"Oftalmologia",
-			"Otorrinolaringologia",
-			"Psiquiatria",
-			"Neurologia"
-	);
+	ObservableList<String> especialidade = FXCollections.observableArrayList();
 
 	ObservableList<String> status_crm = FXCollections.observableArrayList(
 			"Ativo",
@@ -115,6 +106,7 @@ public class CadastroMedicoController {
 	public void initialize() {
 		gerarChoiceBoxes();
 		listaDeMunicipios();
+		listaDeEspecialidades();
 		listarValores();
 	}
 
@@ -346,6 +338,19 @@ public class CadastroMedicoController {
 			}
 		} catch (Exception e) {
 			Alerts.showAlert("Error", null,"VIEW TABLE" + e.getMessage(), Alert.AlertType.ERROR);
+		}
+	}
+
+	private void listaDeEspecialidades() {
+		try {
+			List<EspecialidadeDTO> listaEspecialidade = new EspecialidadeDAO().listarEspecialidade();
+			especialidade.clear();
+
+			for (EspecialidadeDTO especialidadeDTO : listaEspecialidade) {
+				especialidade.add(especialidadeDTO.getNomeEspecialidade());
+			}
+		} catch (Exception e) {
+			Alerts.showAlert("Error", null, "VIEW TABLE" + e.getMessage(), Alert.AlertType.ERROR);
 		}
 	}
 }

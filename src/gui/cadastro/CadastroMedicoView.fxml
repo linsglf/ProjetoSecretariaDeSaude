@@ -12,7 +12,7 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="500.0" minWidth="600.0" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CadastroMedicoController">
+<AnchorPane minHeight="500.0" minWidth="600.0" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.cadastro.CadastroMedicoController">
     <children>
         <Button fx:id="btnInsert" layoutX="63.0" layoutY="267.0" mnemonicParsing="false" onAction="#btnCadastrarActionPerformed" prefHeight="34.0" prefWidth="78.0" text="Cadastrar" AnchorPane.topAnchor="267.0" />
         <Label layoutX="63.0" layoutY="68.0" text="Nome:" AnchorPane.topAnchor="68.0" />

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.especialidade.EspecialidadeController">
+   <children>
+      <Label layoutX="100.0" layoutY="97.0" text="Nome:" />
+      <TableView fx:id="tabelaEspecialidade" layoutY="254.0" prefHeight="378.0" prefWidth="880.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+         <columns>
+            <TableColumn fx:id="especialidadeColumn" minWidth="-1.0" prefWidth="880.0" text="Especialidades" />
+         </columns>
+      </TableView>
+      <TextField fx:id="especialidadeTxtField" layoutX="100.0" layoutY="132.0" prefHeight="26.0" prefWidth="336.0" />
+      <ButtonBar layoutX="82.0" layoutY="188.0" prefHeight="40.0" prefWidth="278.0" AnchorPane.leftAnchor="82.0">
+        <buttons>
+            <Button fx:id="btnCreate" mnemonicParsing="false" onAction="#btnCreateAction" text="Create" />
+            <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#btnEditAction" text="Edit" />
+          <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#btnUpdateAction" prefHeight="26.0" prefWidth="172.0" text="Update" />
+            <Button fx:id="btnDelete" minWidth="0.0" mnemonicParsing="false" onAction="#btnDeleteAction" prefHeight="26.0" text="Delete" />
+        </buttons>
+         <padding>
+            <Insets right="20.0" />
+         </padding>
+      </ButtonBar>
+   </children>
+</AnchorPane>

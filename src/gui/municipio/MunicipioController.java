@@ -1,4 +1,4 @@
-package gui;
+package gui.municipio;
 
 import DAO.MunicipioDAO;
 import DTO.MunicipioDTO;
@@ -77,9 +77,7 @@ public class MunicipioController {
 
         if (selectedMunicipio != null && !municipioTxtField.getText().isEmpty()) {
             int idMunicipio = selectedMunicipio.getIdMunicipio();
-            System.out.println(idMunicipio);
             String nomeMunicipio = municipioTxtField.getText();
-            System.out.println(nomeMunicipio);
 
             objMunicipioDTO.setIdMunicipio(idMunicipio);
             objMunicipioDTO.setNomeMunicipio(nomeMunicipio);

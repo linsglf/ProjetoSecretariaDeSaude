@@ -1,4 +1,4 @@
-package gui;
+package gui.menu;
 
 import gui.util.Alerts;
 import javafx.event.ActionEvent;
@@ -20,6 +20,8 @@ public class MenuController {
     private MenuItem menuCadastroMedico;
     @FXML
     private MenuItem menuEditarMunicipio;
+    @FXML
+    private MenuItem menuEditarEspecialidade;
 
     @FXML
     public void initialize() {
@@ -28,7 +30,7 @@ public class MenuController {
     @FXML
     private void menuCadastrarMedicoAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CadastroMedicoView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/cadastro/CadastroMedicoView.fxml"));
             Parent root = loader.load();
 
             anchorPane.getChildren().clear();
@@ -41,7 +43,20 @@ public class MenuController {
     @FXML
     private void menuEditarMunicipioAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MunicipioView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/municipio/MunicipioView.fxml"));
+            Parent root = loader.load();
+
+            anchorPane.getChildren().clear();
+            anchorPane.getChildren().add(root);
+        } catch (IOException e) {
+            Alerts.showAlert("Error", "Erro ao carregar a tela", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void menuEditarEspecialidadeAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/especialidade/EspecialidadeView.fxml"));
             Parent root = loader.load();
 
             anchorPane.getChildren().clear();

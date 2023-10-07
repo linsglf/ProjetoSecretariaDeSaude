@@ -1,7 +1,5 @@
 package DAO;
 
-import DAO.ConexaoDAO;
-import DTO.Medico;
 import DTO.MunicipioDTO;
 import gui.util.Alerts;
 import javafx.scene.control.Alert.AlertType;
@@ -32,8 +30,8 @@ public class MunicipioDAO {
 
             while (rs.next()) {
                 MunicipioDTO objMunicipioDTO = new MunicipioDTO();
-                objMunicipioDTO.setNomeMunicipio(rs.getString("nome_municipio"));
                 objMunicipioDTO.setIdMunicipio(rs.getInt("id_municipio"));
+                objMunicipioDTO.setNomeMunicipio(rs.getString("nome_municipio"));
 
                 listaMunicipios.add(objMunicipioDTO);
             }
