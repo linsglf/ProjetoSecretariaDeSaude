@@ -11,9 +11,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			Parent parent = FXMLLoader.load(getClass().getResource("/gui/menu/PrimaryScene.fxml"));
+			Parent parent = FXMLLoader.load(getClass().getResource("/gui/intro/IntroView.fxml"));
 			Scene scene = new Scene(parent);
-			stage.setTitle("CRUD");
+			stage.setTitle("Cadastro de Médicos");
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {

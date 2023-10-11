@@ -22,9 +22,24 @@ public class MenuController {
     private MenuItem menuEditarMunicipio;
     @FXML
     private MenuItem menuEditarEspecialidade;
+    @FXML
+    private MenuItem menuEditarArea;
 
     @FXML
     public void initialize() {
+        openMedico();
+    }
+
+    private void openMedico() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/cadastro/CadastroMedicoView.fxml"));
+            Parent root = loader.load();
+
+            anchorPane.getChildren().clear();
+            anchorPane.getChildren().add(root);
+        } catch (IOException e) {
+            Alerts.showAlert("Error", "Erro ao Entrar", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
@@ -57,6 +72,19 @@ public class MenuController {
     private void menuEditarEspecialidadeAction(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/especialidade/EspecialidadeView.fxml"));
+            Parent root = loader.load();
+
+            anchorPane.getChildren().clear();
+            anchorPane.getChildren().add(root);
+        } catch (IOException e) {
+            Alerts.showAlert("Error", "Erro ao carregar a tela", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void menuEditarAreaAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/area/AreaView.fxml"));
             Parent root = loader.load();
 
             anchorPane.getChildren().clear();

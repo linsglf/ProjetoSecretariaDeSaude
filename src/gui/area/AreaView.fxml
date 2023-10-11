@@ -11,20 +11,19 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.especialidade.EspecialidadeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.area.AreaController">
    <children>
-       <ImageView fitHeight="710.0" fitWidth="1090.0" layoutX="-2.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
-           <image>
-               <Image url="@../img/background.png" />
-           </image>
-       </ImageView>
+      <ImageView fitHeight="710.0" fitWidth="1090.0" layoutX="-2.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/background.png" />
+         </image>
+      </ImageView>
       <Label layoutX="100.0" layoutY="97.0" text="Nome:" />
-      <TableView fx:id="tabelaEspecialidade" layoutY="254.0" prefHeight="378.0" prefWidth="880.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+      <TableView fx:id="tabelaArea" layoutY="254.0" prefHeight="378.0" prefWidth="880.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
          <columns>
-            <TableColumn fx:id="especialidadeColumn" minWidth="-1.0" prefWidth="880.0" text="Especialidades" />
+            <TableColumn fx:id="areaColumn" minWidth="-1.0" prefWidth="880.0" text="Áreas de Atuação" />
          </columns>
       </TableView>
-      <TextField fx:id="especialidadeTxtField" layoutX="100.0" layoutY="132.0" prefHeight="26.0" prefWidth="336.0" />
       <ButtonBar layoutX="82.0" layoutY="188.0" prefHeight="40.0" prefWidth="278.0" AnchorPane.leftAnchor="82.0">
         <buttons>
             <Button fx:id="btnCreate" mnemonicParsing="false" onAction="#btnCreateAction" text="Create" />
@@ -36,5 +35,6 @@
             <Insets right="20.0" />
          </padding>
       </ButtonBar>
+      <TextField fx:id="areaTxtField" layoutX="100.0" layoutY="132.0" prefHeight="26.0" prefWidth="336.0" />
    </children>
 </AnchorPane>

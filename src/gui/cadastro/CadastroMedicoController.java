@@ -1,11 +1,10 @@
 package gui.cadastro;
 
 
+import DAO.AreaDAO;
 import DAO.EspecialidadeDAO;
 import DAO.MunicipioDAO;
-import DTO.EspecialidadeDTO;
-import DTO.Medico;
-import DTO.MunicipioDTO;
+import DTO.*;
 import gui.util.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import DAO.MedicoDAO;
-import DTO.MedicoDTO;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -89,24 +87,14 @@ public class CadastroMedicoController {
 			"Inativo"
 	);
 
-	ObservableList<String> areaAtuacao = FXCollections.observableArrayList(
-			"Administração em saúde",
-			"Alergia e Imunologia Pediátrica",
-			"Cardiologia Pediátrica",
-			"Ecocardiografia",
-			"Emergência Pediátrica",
-			"Infectologia Hospitalar",
-			"Neonatologia",
-			"Nutrição Parenteral e Enteral",
-			"Psicoterapia",
-			"Radiologia Intervencionista"
-	);
+	ObservableList<String> areaAtuacao = FXCollections.observableArrayList();
 
 	@FXML
 	public void initialize() {
 		gerarChoiceBoxes();
 		listaDeMunicipios();
 		listaDeEspecialidades();
+		listaDeAreas();
 		listarValores();
 	}
 
@@ -353,5 +341,21 @@ public class CadastroMedicoController {
 			Alerts.showAlert("Error", null, "VIEW TABLE" + e.getMessage(), Alert.AlertType.ERROR);
 		}
 	}
+
+	private void listaDeAreas() {
+		try {
+			List<AreaDTO> listaArea = new AreaDAO().listarAreas();
+			areaAtuacao.clear();
+
+			for (AreaDTO areaDTO : listaArea) {
+				areaAtuacao.add(areaDTO.getNomeArea());
+			}
+		} catch (Exception e) {
+			Alerts.showAlert("Error", null, "VIEW TABLE" + e.getMessage(), Alert.AlertType.ERROR);
+		}
+	}
 }
+
+
+
 
