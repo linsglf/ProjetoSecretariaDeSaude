@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox minHeight="500.0" minWidth="600.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.menu.MenuController">
+<VBox minHeight="500.0" minWidth="600.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.menu.MenuController">
   <children>
     <MenuBar prefHeight="0.0" prefWidth="1080.0" VBox.vgrow="NEVER">
       <menus>
@@ -17,7 +17,7 @@
             <MenuItem fx:id="menuCadastroMedico" mnemonicParsing="false" onAction="#menuCadastrarMedicoAction" text="Médico" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
+        <Menu mnemonicParsing="false" text="Configuração">
           <items>
             <MenuItem fx:id="menuEditarMunicipio" mnemonicParsing="false" onAction="#menuEditarMunicipioAction" text="Município" />
             <MenuItem fx:id="menuEditarEspecialidade" mnemonicParsing="false" onAction="#menuEditarEspecialidadeAction" text="Especialidade" />
