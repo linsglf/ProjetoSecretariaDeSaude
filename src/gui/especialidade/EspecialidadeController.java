@@ -46,7 +46,7 @@ public class EspecialidadeController {
         objMunicipioDTO.setNomeEspecialidade(nomeEspecialidade);
 
         EspecialidadeDAO objMunicipioDAO = new EspecialidadeDAO();
-        objMunicipioDAO.cadastrarEspecialidade(objMunicipioDTO);
+        objMunicipioDAO.insert(objMunicipioDTO);
     }
 
     @FXML
@@ -82,7 +82,7 @@ public class EspecialidadeController {
             objEspecialidadeDTO.setIdEspecialidade(idMunicipio);
             objEspecialidadeDTO.setNomeEspecialidade(nomeMunicipio);
 
-            objEspecialidadeDAO.updateEspecialidade(objEspecialidadeDTO);
+            objEspecialidadeDAO.update(objEspecialidadeDTO);
         } else {
             Alerts.showAlert("Error", null, "Selecione uma especialidade para editar ou insira um nome!", Alert.AlertType.ERROR);
         }
@@ -103,7 +103,7 @@ public class EspecialidadeController {
             int idEspecialidade = selectedEspecialidade.getIdEspecialidade();
             objEspecialidadeDTO.setIdEspecialidade(idEspecialidade);
 
-            objEspecialidadeDAO.deleteEspecialidade(objEspecialidadeDTO);
+            objEspecialidadeDAO.delete(objEspecialidadeDTO);
         } else {
             Alerts.showAlert("Error", null, "Selecione uma especialidade para deletar", Alert.AlertType.ERROR);
         }

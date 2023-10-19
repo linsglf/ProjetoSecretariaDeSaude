@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MunicipioDAO {
+public class MunicipioDAO implements DAO {
 
     Connection conn;
     PreparedStatement pstm;
@@ -42,53 +42,71 @@ public class MunicipioDAO {
         return listaMunicipios;
     }
 
-    public void cadastrarMunicipio(MunicipioDTO objMunicipioDTO) {
-        String sql = "INSERT INTO municipios (nome_municipio) VALUES (?);";
+    @Override
+    public void insert(Object obj) {
+        if (obj instanceof MunicipioDTO) {
+            MunicipioDTO objMunicipioDTO = (MunicipioDTO) obj;
+            String sql = "INSERT INTO municipios (nome_municipio) VALUES (?);";
 
-        conn = new ConexaoDAO().conectaBD();
+            conn = new ConexaoDAO().conectaBD();
 
-        try {
-            pstm = conn.prepareStatement(sql);
-            pstm.setString(1, objMunicipioDTO.getNomeMunicipio());
+            try {
+                pstm = conn.prepareStatement(sql);
+                pstm.setString(1, objMunicipioDTO.getNomeMunicipio());
 
-            pstm.execute();
-            pstm.close();
-        } catch (Exception e) {
+                pstm.execute();
+                pstm.close();
+            } catch (Exception e) {
 
-            Alerts.showAlert("Error", null,"MunicipioDAO Cadastrar" + e.getMessage(), AlertType.ERROR);
+                Alerts.showAlert("Error", null,"MunicipioDAO Cadastrar" + e.getMessage(), AlertType.ERROR);
+            }
+        } else {
+            Alerts.showAlert("Error", null,"Objeto Inválido", AlertType.ERROR);
         }
     }
 
-    public void updateMunicipio(MunicipioDTO objMunicipioDTO) {
-        String sql = "UPDATE municipios SET nome_municipio = ? WHERE id_municipio = ?;";
+    @Override
+    public void update(Object obj) {
+        if (obj instanceof MunicipioDTO) {
+            MunicipioDTO objMunicipioDTO = (MunicipioDTO) obj;
+            String sql = "UPDATE municipios SET nome_municipio = ? WHERE id_municipio = ?;";
 
-        conn = new ConexaoDAO().conectaBD();
+            conn = new ConexaoDAO().conectaBD();
 
-        try {
-            pstm = conn.prepareStatement(sql);
-            pstm.setString(1, objMunicipioDTO.getNomeMunicipio());
-            pstm.setInt(2, objMunicipioDTO.getIdMunicipio());
+            try {
+                pstm = conn.prepareStatement(sql);
+                pstm.setString(1, objMunicipioDTO.getNomeMunicipio());
+                pstm.setInt(2, objMunicipioDTO.getIdMunicipio());
 
-            pstm.execute();
-            pstm.close();
-        } catch (Exception e) {
-            Alerts.showAlert("Error", null,"MunicipioDAO Update" + e.getMessage(), AlertType.ERROR);
+                pstm.execute();
+                pstm.close();
+            } catch (Exception e) {
+                Alerts.showAlert("Error", null,"MunicipioDAO Update" + e.getMessage(), AlertType.ERROR);
+            }
+        } else {
+            Alerts.showAlert("Error", null,"Objeto Inválido", AlertType.ERROR);
         }
     }
 
-    public void deleteMunicipio(MunicipioDTO objMunicipioDTO) {
-        String sql = "DELETE FROM municipios WHERE id_municipio = ?;";
+    @Override
+    public void delete(Object obj) {
+        if (obj instanceof MunicipioDTO) {
+            MunicipioDTO objMunicipioDTO = (MunicipioDTO) obj;
+            String sql = "DELETE FROM municipios WHERE id_municipio = ?;";
 
-        conn = new ConexaoDAO().conectaBD();
+            conn = new ConexaoDAO().conectaBD();
 
-        try {
-            pstm = conn.prepareStatement(sql);
-            pstm.setInt(1, objMunicipioDTO.getIdMunicipio());
+            try {
+                pstm = conn.prepareStatement(sql);
+                pstm.setInt(1, objMunicipioDTO.getIdMunicipio());
 
-            pstm.execute();
-            pstm.close();
-        } catch (SQLException e) {
-            Alerts.showAlert("Error", null,"MunicipioDAO Delete" + e.getMessage(), AlertType.ERROR);
+                pstm.execute();
+                pstm.close();
+            } catch (SQLException e) {
+                Alerts.showAlert("Error", null,"MunicipioDAO Delete" + e.getMessage(), AlertType.ERROR);
+            }
+        } else {
+            Alerts.showAlert("Error", null,"Objeto Inválido", AlertType.ERROR);
         }
     }
 }

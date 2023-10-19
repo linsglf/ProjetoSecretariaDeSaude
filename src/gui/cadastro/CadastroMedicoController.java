@@ -150,7 +150,7 @@ public class CadastroMedicoController {
 		objMedicoDTO.setAreaAtuacao(areaAtuacao);
 
 		MedicoDAO objMedicoDAO = new MedicoDAO();
-		objMedicoDAO.cadastrarMedico(objMedicoDTO);
+		objMedicoDAO.insert(objMedicoDTO);
 	}
 
 	private void listarMedico(List<Medico> listaMedicos) {
@@ -247,7 +247,7 @@ public class CadastroMedicoController {
 			objMedicoDTO.setEspecialidade(especialidade);
 			objMedicoDTO.setAreaAtuacao(areaAtuacao);
 
-			objMedicoDAO.updateFuncionario(objMedicoDTO);
+			objMedicoDAO.update(objMedicoDTO);
 		}else {
 			Alerts.showAlert("Informações inválidas!", null,"Preencha os campos corretamente!", Alert.AlertType.WARNING);
 		}
@@ -262,7 +262,7 @@ public class CadastroMedicoController {
 			int idFuncionario = selectedMedico.getIdMedico();
 			objMedicoDTO.setIdMedico(idFuncionario);
 
-			objMedicoDAO.deleteFuncionario(objMedicoDTO);
+			objMedicoDAO.delete(objMedicoDTO);
 		}else {
 			Alerts.showAlert("Delete ERROR", null,"Unable to delete!", Alert.AlertType.ERROR);
 		}
@@ -274,37 +274,27 @@ public class CadastroMedicoController {
 
 		if (checkMunicipio.isSelected()) {
 			municipio = filtroMunicipio.getValue();
-			System.out.println(municipio);
 		} else {
 			municipio = null;
-			System.out.println(municipio);
 		}
 
 		if (checkCRM.isSelected()) {
 			crm = filtroCRM.getValue();
-			System.out.println(crm);
 		} else {
 			crm = null;
-			System.out.println(crm);
 		}
 
 		if (checkEspecialidade.isSelected()) {
 			especialidade = filtroEspecialidade.getValue();
-			System.out.println(especialidade);
 		} else {
 			especialidade = null;
-			System.out.println(especialidade);
 		}
 
 		if (checkArea.isSelected()) {
 			area = filtroArea.getValue();
-			System.out.println(area);
 		} else {
 			area = null;
-			System.out.println(area);
 		}
-
-		System.out.println(pesquisa);
 
 		try	{
 			MedicoDAO objMedicoDAO = new MedicoDAO();

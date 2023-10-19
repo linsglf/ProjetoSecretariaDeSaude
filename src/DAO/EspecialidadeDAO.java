@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EspecialidadeDAO {
+public class EspecialidadeDAO implements DAO {
 
     Connection conn;
     PreparedStatement pstm;
@@ -42,53 +42,71 @@ public class EspecialidadeDAO {
         return listaEspecialidade;
     }
 
-    public void cadastrarEspecialidade(EspecialidadeDTO objEspecialidadeDTO) {
-        String sql = "INSERT INTO especialidades (nome_especialidade) VALUES (?);";
+    @Override
+    public void insert(Object obj) {
+        if (obj instanceof EspecialidadeDTO) {
+            EspecialidadeDTO objEspecialidadeDTO = (EspecialidadeDTO) obj;
+            String sql = "INSERT INTO especialidades (nome_especialidade) VALUES (?);";
 
-        conn = new ConexaoDAO().conectaBD();
+            conn = new ConexaoDAO().conectaBD();
 
-        try {
-            pstm = conn.prepareStatement(sql);
-            pstm.setString(1, objEspecialidadeDTO.getNomeEspecialidade());
+            try {
+                pstm = conn.prepareStatement(sql);
+                pstm.setString(1, objEspecialidadeDTO.getNomeEspecialidade());
 
-            pstm.execute();
-            pstm.close();
-        } catch (Exception e) {
+                pstm.execute();
+                pstm.close();
+            } catch (Exception e) {
 
-            Alerts.showAlert("Error", null,"EspecialidadeDAO Cadastrar" + e.getMessage(), Alert.AlertType.ERROR);
+                Alerts.showAlert("Error", null,"EspecialidadeDAO Cadastrar" + e.getMessage(), Alert.AlertType.ERROR);
+            }
+        } else {
+            Alerts.showAlert("Error", null,"Objeto Inválido", Alert.AlertType.ERROR);
         }
     }
 
-    public void updateEspecialidade(EspecialidadeDTO objEspecialidadeDTO) {
-        String sql = "UPDATE especialidades SET nome_especialidade = ? WHERE id_especialidade = ?;";
+    @Override
+    public void update(Object obj) {
+        if (obj instanceof EspecialidadeDTO) {
+            EspecialidadeDTO objEspecialidadeDTO = (EspecialidadeDTO) obj;
+            String sql = "UPDATE especialidades SET nome_especialidade = ? WHERE id_especialidade = ?;";
 
-        conn = new ConexaoDAO().conectaBD();
+            conn = new ConexaoDAO().conectaBD();
 
-        try {
-            pstm = conn.prepareStatement(sql);
-            pstm.setString(1, objEspecialidadeDTO.getNomeEspecialidade());
-            pstm.setInt(2, objEspecialidadeDTO.getIdEspecialidade());
+            try {
+                pstm = conn.prepareStatement(sql);
+                pstm.setString(1, objEspecialidadeDTO.getNomeEspecialidade());
+                pstm.setInt(2, objEspecialidadeDTO.getIdEspecialidade());
 
-            pstm.execute();
-            pstm.close();
-        } catch (Exception e) {
-            Alerts.showAlert("Error", null,"EspecialidadeDAO Update" + e.getMessage(), Alert.AlertType.ERROR);
+                pstm.execute();
+                pstm.close();
+            } catch (Exception e) {
+                Alerts.showAlert("Error", null,"EspecialidadeDAO Update" + e.getMessage(), Alert.AlertType.ERROR);
+            }
+        } else {
+            Alerts.showAlert("Error", null,"Objeto Inválido", Alert.AlertType.ERROR);
         }
     }
 
-    public void deleteEspecialidade(EspecialidadeDTO objEspecialidadeDTO) {
-        String sql = "DELETE FROM especialidades WHERE id_especialidade = ?;";
+    @Override
+    public void delete(Object obj) {
+        if (obj instanceof EspecialidadeDTO) {
+            EspecialidadeDTO objEspecialidadeDTO = (EspecialidadeDTO) obj;
+            String sql = "DELETE FROM especialidades WHERE id_especialidade = ?;";
 
-        conn = new ConexaoDAO().conectaBD();
+            conn = new ConexaoDAO().conectaBD();
 
-        try {
-            pstm = conn.prepareStatement(sql);
-            pstm.setInt(1, objEspecialidadeDTO.getIdEspecialidade());
+            try {
+                pstm = conn.prepareStatement(sql);
+                pstm.setInt(1, objEspecialidadeDTO.getIdEspecialidade());
 
-            pstm.execute();
-            pstm.close();
-        } catch (SQLException e) {
-            Alerts.showAlert("Error", null,"EspecialidadeDAO Delete" + e.getMessage(), Alert.AlertType.ERROR);
+                pstm.execute();
+                pstm.close();
+            } catch (SQLException e) {
+                Alerts.showAlert("Error", null,"EspecialidadeDAO Delete" + e.getMessage(), Alert.AlertType.ERROR);
+            }
+        } else {
+            Alerts.showAlert("Error", null,"Objeto Inválido", Alert.AlertType.ERROR);
         }
     }
 }

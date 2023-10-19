@@ -46,7 +46,7 @@ public class MunicipioController {
         objMunicipioDTO.setNomeMunicipio(nomeMunicipio);
 
         MunicipioDAO objMunicipioDAO = new MunicipioDAO();
-        objMunicipioDAO.cadastrarMunicipio(objMunicipioDTO);
+        objMunicipioDAO.insert(objMunicipioDTO);
     }
 
     @FXML
@@ -82,7 +82,7 @@ public class MunicipioController {
             objMunicipioDTO.setIdMunicipio(idMunicipio);
             objMunicipioDTO.setNomeMunicipio(nomeMunicipio);
 
-            objMunicipioDAO.updateMunicipio(objMunicipioDTO);
+            objMunicipioDAO.update(objMunicipioDTO);
         } else {
             Alerts.showAlert("Error", null, "Selecione um municipio para editar ou insira um nome!", Alert.AlertType.ERROR);
         }
@@ -103,7 +103,7 @@ public class MunicipioController {
             int idMunicipio = selectedMunicipio.getIdMunicipio();
             objMunicipioDTO.setIdMunicipio(idMunicipio);
 
-            objMunicipioDAO.deleteMunicipio(objMunicipioDTO);
+            objMunicipioDAO.delete(objMunicipioDTO);
         } else {
             Alerts.showAlert("Error", null, "Selecione um municipio para deletar", Alert.AlertType.ERROR);
         }

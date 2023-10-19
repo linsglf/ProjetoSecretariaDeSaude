@@ -11,33 +11,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class MedicoDAO {
+public class MedicoDAO implements DAO{
 	
 	Connection conn;
 	PreparedStatement pstm;
 	ResultSet rs;
 	ArrayList<Medico> lista = new ArrayList<>();
-	public void cadastrarMedico(Medico objMedicoDTO) {
-		String sql = "INSERT INTO medico (nome_medico, crm_medico, municipio_medico, crm_status_medico, especialidade_medico, area_medico) VALUES (?,?,?,?,?,?);";
 
-		conn = new ConexaoDAO().conectaBD();
-
-		try {
-			pstm = conn.prepareStatement(sql);
-			pstm.setString(1, objMedicoDTO.getNomeMedico());
-			pstm.setString(2, objMedicoDTO.getCRM());
-			pstm.setString(3, objMedicoDTO.getMunicipio());
-			pstm.setString(4, objMedicoDTO.getStatusCRM());
-			pstm.setString(5, objMedicoDTO.getEspecialidade());
-			pstm.setString(6, objMedicoDTO.getAreaAtuacao());
-
-			pstm.execute();
-			pstm.close();
-		} catch (Exception e) {
-
-			Alerts.showAlert("Error", null,"MedicoDAO Cadastrar" + e.getMessage(), AlertType.ERROR);
-		}
-	}
 
 	public ArrayList<Medico> listarMedico() {
 		String sql = "SELECT * FROM medico;";
@@ -66,41 +46,81 @@ public class MedicoDAO {
 		return lista;
 	}
 
-	public void updateFuncionario(Medico objMedicoDTO) {
-		String sql = "UPDATE medico SET nome_medico = ?, crm_medico = ?, municipio_medico = ?, crm_status_medico = ?, especialidade_medico = ?, area_medico = ? WHERE id_medico = ?;";
+	@Override
+	public void insert(Object obj) {
+		if (obj instanceof MedicoDTO) {
+			MedicoDTO objMedicoDTO = (MedicoDTO) obj;
+			String sql = "INSERT INTO medico (nome_medico, crm_medico, municipio_medico, crm_status_medico, especialidade_medico, area_medico) VALUES (?,?,?,?,?,?);";
 
-		conn = new ConexaoDAO().conectaBD();
+			conn = new ConexaoDAO().conectaBD();
 
-		try {
-			pstm = conn.prepareStatement(sql);
-			pstm.setString(1, objMedicoDTO.getNomeMedico());
-			pstm.setString(2, objMedicoDTO.getCRM());
-			pstm.setString(3, objMedicoDTO.getMunicipio());
-			pstm.setString(4, objMedicoDTO.getStatusCRM());
-			pstm.setString(5, objMedicoDTO.getEspecialidade());
-			pstm.setString(6, objMedicoDTO.getAreaAtuacao());
-			pstm.setInt(7, objMedicoDTO.getIdMedico());
+			try {
+				pstm = conn.prepareStatement(sql);
+				pstm.setString(1, objMedicoDTO.getNomeMedico());
+				pstm.setString(2, objMedicoDTO.getCRM());
+				pstm.setString(3, objMedicoDTO.getMunicipio());
+				pstm.setString(4, objMedicoDTO.getStatusCRM());
+				pstm.setString(5, objMedicoDTO.getEspecialidade());
+				pstm.setString(6, objMedicoDTO.getAreaAtuacao());
 
-			pstm.execute();
-			pstm.close();
-		} catch (Exception e) {
-			Alerts.showAlert("Error", null,"MedicoDAO Update" + e.getMessage(), AlertType.ERROR);
+				pstm.execute();
+				pstm.close();
+			} catch (Exception e) {
+
+				Alerts.showAlert("Error", null,"MedicoDAO Cadastrar" + e.getMessage(), AlertType.ERROR);
+			}
+		} else {
+			Alerts.showAlert("Error", null,"Objeto Inválido", AlertType.ERROR);
 		}
 	}
 
-	public void deleteFuncionario(Medico objMedicoDTO) {
-		String sql = "DELETE FROM medico WHERE id_medico = ?;";
+	@Override
+	public void update(Object obj) {
+		if (obj instanceof MedicoDTO) {
+			MedicoDTO objMedicoDTO = (MedicoDTO) obj;
+			String sql = "UPDATE medico SET nome_medico = ?, crm_medico = ?, municipio_medico = ?, crm_status_medico = ?, especialidade_medico = ?, area_medico = ? WHERE id_medico = ?;";
 
-		conn = new ConexaoDAO().conectaBD();
+			conn = new ConexaoDAO().conectaBD();
 
-		try {
-			pstm = conn.prepareStatement(sql);
-			pstm.setInt(1, objMedicoDTO.getIdMedico());
+			try {
+				pstm = conn.prepareStatement(sql);
+				pstm.setString(1, objMedicoDTO.getNomeMedico());
+				pstm.setString(2, objMedicoDTO.getCRM());
+				pstm.setString(3, objMedicoDTO.getMunicipio());
+				pstm.setString(4, objMedicoDTO.getStatusCRM());
+				pstm.setString(5, objMedicoDTO.getEspecialidade());
+				pstm.setString(6, objMedicoDTO.getAreaAtuacao());
+				pstm.setInt(7, objMedicoDTO.getIdMedico());
 
-			pstm.execute();
-			pstm.close();
-		} catch (SQLException e) {
-			Alerts.showAlert("Error", null,"MedicoDAO Delete" + e.getMessage(), AlertType.ERROR);
+				pstm.execute();
+				pstm.close();
+			} catch (Exception e) {
+				Alerts.showAlert("Error", null,"MedicoDAO Update" + e.getMessage(), AlertType.ERROR);
+			}
+		} else {
+			Alerts.showAlert("Error", null,"Objeto Inválido", AlertType.ERROR);
+		}
+	}
+
+	@Override
+	public void delete(Object obj) {
+		if (obj instanceof MedicoDTO) {
+			MedicoDTO objMedicoDTO = (MedicoDTO) obj;
+			String sql = "DELETE FROM medico WHERE id_medico = ?;";
+
+			conn = new ConexaoDAO().conectaBD();
+
+			try {
+				pstm = conn.prepareStatement(sql);
+				pstm.setInt(1, objMedicoDTO.getIdMedico());
+
+				pstm.execute();
+				pstm.close();
+			} catch (SQLException e) {
+				Alerts.showAlert("Error", null,"MedicoDAO Delete" + e.getMessage(), AlertType.ERROR);
+			}
+		} else {
+			Alerts.showAlert("Error", null,"Objeto Inválido", AlertType.ERROR);
 		}
 	}
 
@@ -158,4 +178,10 @@ public class MedicoDAO {
 
 		return lista;
 	}
+
+
+
+
+
+
 }
