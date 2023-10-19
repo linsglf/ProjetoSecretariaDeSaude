@@ -49,7 +49,7 @@ public class AreaController {
         objAreaDTO.setNomeArea(nomeArea);
 
         AreaDAO objAreaDAO = new AreaDAO();
-        objAreaDAO.cadastrarArea(objAreaDTO);
+        objAreaDAO.insert(objAreaDTO);
     }
 
     @FXML
@@ -80,13 +80,13 @@ public class AreaController {
         AreaDAO objAreaDAO = new AreaDAO();
 
         if (selectedArea != null && !areaTxtField.getText().isEmpty()) {
-            int idArea = selectedArea.getIdArea();
+            int idArea = selectedArea.getId();
             String nomeArea = areaTxtField.getText();
 
-            objAreaDTO.setIdArea(idArea);
+            objAreaDTO.setId(idArea);
             objAreaDTO.setNomeArea(nomeArea);
 
-            objAreaDAO.updateArea(objAreaDTO);
+            objAreaDAO.update(objAreaDTO);
         } else {
             Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", null, "Selecione uma Area para editar", Alert.AlertType.ERROR);
@@ -105,10 +105,10 @@ public class AreaController {
         AreaDAO objAreaDAO = new AreaDAO();
 
         if (selectedArea != null) {
-            int idArea = selectedArea.getIdArea();
-            objAreaDTO.setIdArea(idArea);
+            int idArea = selectedArea.getId();
+            objAreaDTO.setId(idArea);
 
-            objAreaDAO.deleteArea(objAreaDTO);
+            objAreaDAO.delete(objAreaDTO);
         } else {
             Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", null, "Selecione uma Area para deletar", Alert.AlertType.ERROR);
