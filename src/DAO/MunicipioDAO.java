@@ -1,5 +1,6 @@
 package DAO;
 
+import DTO.DTO;
 import DTO.MunicipioDTO;
 import gui.util.Alerts;
 import javafx.scene.control.Alert.AlertType;
@@ -30,7 +31,7 @@ public class MunicipioDAO implements DAO {
 
             while (rs.next()) {
                 MunicipioDTO objMunicipioDTO = new MunicipioDTO();
-                objMunicipioDTO.setIdMunicipio(rs.getInt("id_municipio"));
+                objMunicipioDTO.setId(rs.getInt("id_municipio"));
                 objMunicipioDTO.setNomeMunicipio(rs.getString("nome_municipio"));
 
                 listaMunicipios.add(objMunicipioDTO);
@@ -43,7 +44,7 @@ public class MunicipioDAO implements DAO {
     }
 
     @Override
-    public void insert(Object obj) {
+    public void insert(DTO obj) {
         if (obj instanceof MunicipioDTO) {
             MunicipioDTO objMunicipioDTO = (MunicipioDTO) obj;
             String sql = "INSERT INTO municipios (nome_municipio) VALUES (?);";
@@ -66,7 +67,7 @@ public class MunicipioDAO implements DAO {
     }
 
     @Override
-    public void update(Object obj) {
+    public void update(DTO obj) {
         if (obj instanceof MunicipioDTO) {
             MunicipioDTO objMunicipioDTO = (MunicipioDTO) obj;
             String sql = "UPDATE municipios SET nome_municipio = ? WHERE id_municipio = ?;";
@@ -76,7 +77,7 @@ public class MunicipioDAO implements DAO {
             try {
                 pstm = conn.prepareStatement(sql);
                 pstm.setString(1, objMunicipioDTO.getNomeMunicipio());
-                pstm.setInt(2, objMunicipioDTO.getIdMunicipio());
+                pstm.setInt(2, objMunicipioDTO.getId());
 
                 pstm.execute();
                 pstm.close();
@@ -89,7 +90,7 @@ public class MunicipioDAO implements DAO {
     }
 
     @Override
-    public void delete(Object obj) {
+    public void delete(DTO obj) {
         if (obj instanceof MunicipioDTO) {
             MunicipioDTO objMunicipioDTO = (MunicipioDTO) obj;
             String sql = "DELETE FROM municipios WHERE id_municipio = ?;";
@@ -98,7 +99,7 @@ public class MunicipioDAO implements DAO {
 
             try {
                 pstm = conn.prepareStatement(sql);
-                pstm.setInt(1, objMunicipioDTO.getIdMunicipio());
+                pstm.setInt(1, objMunicipioDTO.getId());
 
                 pstm.execute();
                 pstm.close();

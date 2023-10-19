@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.awt.Toolkit;
 import java.util.List;
 
 public class MunicipioController {
@@ -42,11 +43,16 @@ public class MunicipioController {
     private void criarMunicipio() {
         String nomeMunicipio = municipioTxtField.getText();
 
-        MunicipioDTO objMunicipioDTO = new MunicipioDTO();
-        objMunicipioDTO.setNomeMunicipio(nomeMunicipio);
+        if (!nomeMunicipio.isEmpty()) {
+            MunicipioDTO objMunicipioDTO = new MunicipioDTO();
+            objMunicipioDTO.setNomeMunicipio(nomeMunicipio);
 
-        MunicipioDAO objMunicipioDAO = new MunicipioDAO();
-        objMunicipioDAO.insert(objMunicipioDTO);
+            MunicipioDAO objMunicipioDAO = new MunicipioDAO();
+            objMunicipioDAO.insert(objMunicipioDTO);
+        } else {
+            Toolkit.getDefaultToolkit().beep();
+            Alerts.showAlert("Error", null, "Preencha o campo", Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
@@ -60,6 +66,7 @@ public class MunicipioController {
         if (selectedMunicipio != null) {
             municipioTxtField.setText(selectedMunicipio.getNomeMunicipio());
         } else {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", null, "Selecione um municipio para editar", Alert.AlertType.ERROR);
         }
     }
@@ -76,14 +83,15 @@ public class MunicipioController {
         MunicipioDAO objMunicipioDAO = new MunicipioDAO();
 
         if (selectedMunicipio != null && !municipioTxtField.getText().isEmpty()) {
-            int idMunicipio = selectedMunicipio.getIdMunicipio();
+            int idMunicipio = selectedMunicipio.getId();
             String nomeMunicipio = municipioTxtField.getText();
 
-            objMunicipioDTO.setIdMunicipio(idMunicipio);
+            objMunicipioDTO.setId(idMunicipio);
             objMunicipioDTO.setNomeMunicipio(nomeMunicipio);
 
             objMunicipioDAO.update(objMunicipioDTO);
         } else {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", null, "Selecione um municipio para editar ou insira um nome!", Alert.AlertType.ERROR);
         }
     }
@@ -100,11 +108,12 @@ public class MunicipioController {
         MunicipioDAO objMunicipioDAO = new MunicipioDAO();
 
         if (selectedMunicipio != null) {
-            int idMunicipio = selectedMunicipio.getIdMunicipio();
-            objMunicipioDTO.setIdMunicipio(idMunicipio);
+            int idMunicipio = selectedMunicipio.getId();
+            objMunicipioDTO.setId(idMunicipio);
 
             objMunicipioDAO.delete(objMunicipioDTO);
         } else {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", null, "Selecione um municipio para deletar", Alert.AlertType.ERROR);
         }
     }
@@ -119,6 +128,7 @@ public class MunicipioController {
             List<MunicipioDTO> listaMunicipio = new MunicipioDAO().listarMunicipios();
             listarMunicipios(listaMunicipio);
         } catch (Exception e) {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", null,"VIEW TABLE MUNICIPIO" + e.getMessage(), Alert.AlertType.ERROR);
         }
     }

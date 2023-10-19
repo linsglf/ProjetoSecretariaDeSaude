@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.awt.Toolkit;
 import java.util.List;
 
 public class EspecialidadeController {
@@ -42,11 +43,16 @@ public class EspecialidadeController {
     private void criarEspecialidade() {
         String nomeEspecialidade = especialidadeTxtField.getText();
 
-        EspecialidadeDTO objMunicipioDTO = new EspecialidadeDTO();
-        objMunicipioDTO.setNomeEspecialidade(nomeEspecialidade);
+        if (!nomeEspecialidade.isEmpty()) {
+            EspecialidadeDTO objMunicipioDTO = new EspecialidadeDTO();
+            objMunicipioDTO.setNomeEspecialidade(nomeEspecialidade);
 
-        EspecialidadeDAO objMunicipioDAO = new EspecialidadeDAO();
-        objMunicipioDAO.insert(objMunicipioDTO);
+            EspecialidadeDAO objMunicipioDAO = new EspecialidadeDAO();
+            objMunicipioDAO.insert(objMunicipioDTO);
+        } else {
+            Toolkit.getDefaultToolkit().beep();
+            Alerts.showAlert("Error", null, "Preencha o campo", Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
@@ -60,6 +66,7 @@ public class EspecialidadeController {
         if (selectedEspecialidade != null) {
             especialidadeTxtField.setText(selectedEspecialidade.getNomeEspecialidade());
         } else {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", null, "Selecione uma Especialidade para editar", Alert.AlertType.ERROR);
         }
     }
@@ -76,14 +83,15 @@ public class EspecialidadeController {
         EspecialidadeDAO objEspecialidadeDAO = new EspecialidadeDAO();
 
         if (selectedEspecialidade != null && !especialidadeTxtField.getText().isEmpty()) {
-            int idMunicipio = selectedEspecialidade.getIdEspecialidade();
+            int idMunicipio = selectedEspecialidade.getId();
             String nomeMunicipio = especialidadeTxtField.getText();
 
-            objEspecialidadeDTO.setIdEspecialidade(idMunicipio);
+            objEspecialidadeDTO.setId(idMunicipio);
             objEspecialidadeDTO.setNomeEspecialidade(nomeMunicipio);
 
             objEspecialidadeDAO.update(objEspecialidadeDTO);
         } else {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", null, "Selecione uma especialidade para editar ou insira um nome!", Alert.AlertType.ERROR);
         }
     }
@@ -100,11 +108,12 @@ public class EspecialidadeController {
         EspecialidadeDAO objEspecialidadeDAO = new EspecialidadeDAO();
 
         if (selectedEspecialidade != null) {
-            int idEspecialidade = selectedEspecialidade.getIdEspecialidade();
-            objEspecialidadeDTO.setIdEspecialidade(idEspecialidade);
+            int idEspecialidade = selectedEspecialidade.getId();
+            objEspecialidadeDTO.setId(idEspecialidade);
 
             objEspecialidadeDAO.delete(objEspecialidadeDTO);
         } else {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", null, "Selecione uma especialidade para deletar", Alert.AlertType.ERROR);
         }
     }
@@ -119,6 +128,7 @@ public class EspecialidadeController {
             List<EspecialidadeDTO> listaEspecialidade = new EspecialidadeDAO().listarEspecialidade();
             listarEspecialidades(listaEspecialidade);
         } catch (Exception e) {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", null,"VIEW TABLE ESPECIALIDADE" + e.getMessage(), Alert.AlertType.ERROR);
         }
     }

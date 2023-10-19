@@ -1,6 +1,7 @@
 package DAO;
 
 import DTO.AreaDTO;
+import DTO.DTO;
 import gui.util.Alerts;
 import javafx.scene.control.Alert;
 
@@ -43,7 +44,7 @@ public class AreaDAO implements DAO {
     }
 
     @Override
-    public void insert(Object obj) {
+    public void insert(DTO obj) {
         if (obj instanceof AreaDTO) {
             AreaDTO objAreaDTO = (AreaDTO) obj;
             String sql = "INSERT INTO areas (nome_area) VALUES (?);";
@@ -65,7 +66,7 @@ public class AreaDAO implements DAO {
     }
 
     @Override
-    public void update(Object obj) {
+    public void update(DTO obj) {
         if (obj instanceof AreaDTO) {
             AreaDTO objAreaDTO = (AreaDTO) obj;
             String sql = "UPDATE areas SET nome_area = ? WHERE id_area = ?;";
@@ -88,7 +89,7 @@ public class AreaDAO implements DAO {
     }
 
     @Override
-    public void delete(Object obj) {
+    public void delete(DTO obj) {
         if (obj instanceof AreaDTO) {
             AreaDTO objAreaDTO = (AreaDTO) obj;
             String sql = "DELETE FROM areas WHERE id_area = ?;";

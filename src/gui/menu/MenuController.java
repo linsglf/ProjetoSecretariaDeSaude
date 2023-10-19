@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 
+import java.awt.Toolkit;
 import java.io.IOException;
 
 
@@ -38,6 +39,7 @@ public class MenuController {
             anchorPane.getChildren().clear();
             anchorPane.getChildren().add(root);
         } catch (IOException e) {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", "Erro ao Entrar", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -51,6 +53,7 @@ public class MenuController {
             anchorPane.getChildren().clear();
             anchorPane.getChildren().add(root);
         } catch (IOException e) {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", "Erro ao carregar a tela", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -64,6 +67,7 @@ public class MenuController {
             anchorPane.getChildren().clear();
             anchorPane.getChildren().add(root);
         } catch (IOException e) {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", "Erro ao carregar a tela", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -77,6 +81,7 @@ public class MenuController {
             anchorPane.getChildren().clear();
             anchorPane.getChildren().add(root);
         } catch (IOException e) {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", "Erro ao carregar a tela", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -90,6 +95,7 @@ public class MenuController {
             anchorPane.getChildren().clear();
             anchorPane.getChildren().add(root);
         } catch (IOException e) {
+            Toolkit.getDefaultToolkit().beep();
             Alerts.showAlert("Error", "Erro ao carregar a tela", e.getMessage(), Alert.AlertType.ERROR);
         }
     }

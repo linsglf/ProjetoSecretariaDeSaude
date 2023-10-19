@@ -1,6 +1,6 @@
 package DAO;
 
-import DTO.Medico;
+import DTO.DTO;
 import DTO.MedicoDTO;
 import gui.util.Alerts;
 import javafx.scene.control.Alert.AlertType;
@@ -16,10 +16,10 @@ public class MedicoDAO implements DAO{
 	Connection conn;
 	PreparedStatement pstm;
 	ResultSet rs;
-	ArrayList<Medico> lista = new ArrayList<>();
+	ArrayList<MedicoDTO> lista = new ArrayList<>();
 
 
-	public ArrayList<Medico> listarMedico() {
+	public ArrayList<MedicoDTO> listarMedico() {
 		String sql = "SELECT * FROM medico;";
 
 		conn = new ConexaoDAO().conectaBD();
@@ -30,7 +30,7 @@ public class MedicoDAO implements DAO{
 
 			while (rs.next()){
 				MedicoDTO objMedicoDTO = new MedicoDTO();
-				objMedicoDTO.setIdMedico(rs.getInt("id_medico"));
+				objMedicoDTO.setId(rs.getInt("id_medico"));
 				objMedicoDTO.setNomeMedico(rs.getString("nome_medico"));
 				objMedicoDTO.setCRM(rs.getString("crm_medico"));
 				objMedicoDTO.setMunicipio(rs.getString("municipio_medico"));
@@ -47,7 +47,7 @@ public class MedicoDAO implements DAO{
 	}
 
 	@Override
-	public void insert(Object obj) {
+	public void insert(DTO obj) {
 		if (obj instanceof MedicoDTO) {
 			MedicoDTO objMedicoDTO = (MedicoDTO) obj;
 			String sql = "INSERT INTO medico (nome_medico, crm_medico, municipio_medico, crm_status_medico, especialidade_medico, area_medico) VALUES (?,?,?,?,?,?);";
@@ -75,7 +75,7 @@ public class MedicoDAO implements DAO{
 	}
 
 	@Override
-	public void update(Object obj) {
+	public void update(DTO obj) {
 		if (obj instanceof MedicoDTO) {
 			MedicoDTO objMedicoDTO = (MedicoDTO) obj;
 			String sql = "UPDATE medico SET nome_medico = ?, crm_medico = ?, municipio_medico = ?, crm_status_medico = ?, especialidade_medico = ?, area_medico = ? WHERE id_medico = ?;";
@@ -90,7 +90,7 @@ public class MedicoDAO implements DAO{
 				pstm.setString(4, objMedicoDTO.getStatusCRM());
 				pstm.setString(5, objMedicoDTO.getEspecialidade());
 				pstm.setString(6, objMedicoDTO.getAreaAtuacao());
-				pstm.setInt(7, objMedicoDTO.getIdMedico());
+				pstm.setInt(7, objMedicoDTO.getId());
 
 				pstm.execute();
 				pstm.close();
@@ -103,7 +103,7 @@ public class MedicoDAO implements DAO{
 	}
 
 	@Override
-	public void delete(Object obj) {
+	public void delete(DTO obj) {
 		if (obj instanceof MedicoDTO) {
 			MedicoDTO objMedicoDTO = (MedicoDTO) obj;
 			String sql = "DELETE FROM medico WHERE id_medico = ?;";
@@ -112,7 +112,7 @@ public class MedicoDAO implements DAO{
 
 			try {
 				pstm = conn.prepareStatement(sql);
-				pstm.setInt(1, objMedicoDTO.getIdMedico());
+				pstm.setInt(1, objMedicoDTO.getId());
 
 				pstm.execute();
 				pstm.close();
@@ -124,7 +124,7 @@ public class MedicoDAO implements DAO{
 		}
 	}
 
-	public ArrayList<Medico> pesquisarMedico(String pesquisa, String municipio, String statusCRM, String especialidade, String areaAtuacao) {
+	public ArrayList<MedicoDTO> pesquisarMedico(String pesquisa, String municipio, String statusCRM, String especialidade, String areaAtuacao) {
 		if (municipio == null) {
 			municipio = "";
 		}
@@ -162,7 +162,7 @@ public class MedicoDAO implements DAO{
 
 			while (rs.next()) {
 				MedicoDTO objMedicoDTO = new MedicoDTO();
-				objMedicoDTO.setIdMedico(rs.getInt("id_medico"));
+				objMedicoDTO.setId(rs.getInt("id_medico"));
 				objMedicoDTO.setNomeMedico(rs.getString("nome_medico"));
 				objMedicoDTO.setCRM(rs.getString("crm_medico"));
 				objMedicoDTO.setMunicipio(rs.getString("municipio_medico"));

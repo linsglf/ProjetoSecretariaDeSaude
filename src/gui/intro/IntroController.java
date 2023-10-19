@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
+import java.awt.Toolkit;
 import java.io.IOException;
 
 public class IntroController {
@@ -30,7 +31,8 @@ public class IntroController {
             anchorPane.getChildren().clear();
             anchorPane.getChildren().add(root);
         } catch (IOException e) {
-            Alerts.showAlert("Error", "Erro ao carregar a tela1", e.getMessage(), Alert.AlertType.ERROR);
+            Toolkit.getDefaultToolkit().beep();
+            Alerts.showAlert("Error", "Erro ao carregar a tela", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 }

@@ -1,5 +1,6 @@
 package DAO;
 
+import DTO.DTO;
 import DTO.EspecialidadeDTO;
 import gui.util.Alerts;
 import javafx.scene.control.Alert;
@@ -30,7 +31,7 @@ public class EspecialidadeDAO implements DAO {
 
             while (rs.next()) {
                 EspecialidadeDTO objEspecialidadeDTO = new EspecialidadeDTO();
-                objEspecialidadeDTO.setIdEspecialidade(rs.getInt("id_especialidade"));
+                objEspecialidadeDTO.setId(rs.getInt("id_especialidade"));
                 objEspecialidadeDTO.setNomeEspecialidade(rs.getString("nome_especialidade"));
 
                 listaEspecialidade.add(objEspecialidadeDTO);
@@ -43,7 +44,7 @@ public class EspecialidadeDAO implements DAO {
     }
 
     @Override
-    public void insert(Object obj) {
+    public void insert(DTO obj) {
         if (obj instanceof EspecialidadeDTO) {
             EspecialidadeDTO objEspecialidadeDTO = (EspecialidadeDTO) obj;
             String sql = "INSERT INTO especialidades (nome_especialidade) VALUES (?);";
@@ -66,7 +67,7 @@ public class EspecialidadeDAO implements DAO {
     }
 
     @Override
-    public void update(Object obj) {
+    public void update(DTO obj) {
         if (obj instanceof EspecialidadeDTO) {
             EspecialidadeDTO objEspecialidadeDTO = (EspecialidadeDTO) obj;
             String sql = "UPDATE especialidades SET nome_especialidade = ? WHERE id_especialidade = ?;";
@@ -76,7 +77,7 @@ public class EspecialidadeDAO implements DAO {
             try {
                 pstm = conn.prepareStatement(sql);
                 pstm.setString(1, objEspecialidadeDTO.getNomeEspecialidade());
-                pstm.setInt(2, objEspecialidadeDTO.getIdEspecialidade());
+                pstm.setInt(2, objEspecialidadeDTO.getId());
 
                 pstm.execute();
                 pstm.close();
@@ -89,7 +90,7 @@ public class EspecialidadeDAO implements DAO {
     }
 
     @Override
-    public void delete(Object obj) {
+    public void delete(DTO obj) {
         if (obj instanceof EspecialidadeDTO) {
             EspecialidadeDTO objEspecialidadeDTO = (EspecialidadeDTO) obj;
             String sql = "DELETE FROM especialidades WHERE id_especialidade = ?;";
@@ -98,7 +99,7 @@ public class EspecialidadeDAO implements DAO {
 
             try {
                 pstm = conn.prepareStatement(sql);
-                pstm.setInt(1, objEspecialidadeDTO.getIdEspecialidade());
+                pstm.setInt(1, objEspecialidadeDTO.getId());
 
                 pstm.execute();
                 pstm.close();

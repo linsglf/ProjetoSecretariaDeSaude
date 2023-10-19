@@ -16,6 +16,7 @@ import DAO.MedicoDAO;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.awt.Toolkit;
 import java.util.List;
 
 public class CadastroMedicoController {
@@ -36,19 +37,19 @@ public class CadastroMedicoController {
 	@FXML
 	private Button btnPesquisar;
 	@FXML
-	private TableView<Medico> tabelaMedico;
+	private TableView<MedicoDTO> tabelaMedico;
 	@FXML
-	private TableColumn<Medico, String> nomeColumn;
+	private TableColumn<MedicoDTO, String> nomeColumn;
 	@FXML
-	private TableColumn<Medico, String> CRMColumn;
+	private TableColumn<MedicoDTO, String> CRMColumn;
 	@FXML
-	private TableColumn<Medico, String> municipioColumn;
+	private TableColumn<MedicoDTO, String> municipioColumn;
 	@FXML
-	private TableColumn<Medico, String> situacaoCRMColumn;
+	private TableColumn<MedicoDTO, String> situacaoCRMColumn;
 	@FXML
-	private TableColumn<Medico, String> especialidadeColumn;
+	private TableColumn<MedicoDTO, String> especialidadeColumn;
 	@FXML
-	private TableColumn<Medico, String> areaColumn;
+	private TableColumn<MedicoDTO, String> areaColumn;
 	@FXML
 	private ChoiceBox<String> CRMChoiceBox;
 	@FXML
@@ -75,8 +76,6 @@ public class CadastroMedicoController {
 	private CheckBox checkArea;
 	@FXML
 	private ChoiceBox<String> filtroArea;
-	@FXML
-	private Button btnTeste;
 
 	ObservableList<String> municipio = FXCollections.observableArrayList();
 
@@ -132,28 +131,46 @@ public class CadastroMedicoController {
 	}
 
 	private void cadastrarMedico() {
+		String municipioDefaultValue = "Selecione o município";
+		String CRMDefaultValue = "Selecione a situação do CRM";
+		String especialidadeDefaultValue = "Selecione a especialidade";
+		String areaAtuacaoDefaultValue = "Selecione a área de atuação";
+
 		String nome, crm, municipio, statusCRM, especialidade, areaAtuacao;
 
-		nome = txtNome.getText();
-		crm = txtCRM.getText();
-		municipio = municipioChoiceBox.getValue();
-		statusCRM = CRMChoiceBox.getValue();
-		especialidade = especialidadeChoiceBox.getValue();
-		areaAtuacao = atuacaoChoiceBox.getValue();
+		if (
+				!txtNome.getText().isEmpty() && !txtCRM.getText().isEmpty()
+				&& !municipioChoiceBox.getValue().equals(municipioDefaultValue)
+				&& !CRMChoiceBox.getValue().equals(CRMDefaultValue)
+				&& !especialidadeChoiceBox.getValue().equals(especialidadeDefaultValue)
+				&& !atuacaoChoiceBox.getValue().equals(areaAtuacaoDefaultValue)
+		) {
+			nome = txtNome.getText();
+			crm = txtCRM.getText();
 
-		Medico objMedicoDTO = new MedicoDTO();
-		objMedicoDTO.setNomeMedico(nome);
-		objMedicoDTO.setCRM(crm);
-		objMedicoDTO.setMunicipio(municipio);
-		objMedicoDTO.setStatusCRM(statusCRM);
-		objMedicoDTO.setEspecialidade(especialidade);
-		objMedicoDTO.setAreaAtuacao(areaAtuacao);
+			municipio = municipioChoiceBox.getValue();
+			statusCRM = CRMChoiceBox.getValue();
+			especialidade = especialidadeChoiceBox.getValue();
+			areaAtuacao = atuacaoChoiceBox.getValue();
 
-		MedicoDAO objMedicoDAO = new MedicoDAO();
-		objMedicoDAO.insert(objMedicoDTO);
+			MedicoDTO objMedicoDTO = new MedicoDTO();
+			MedicoDAO objMedicoDAO = new MedicoDAO();
+
+			objMedicoDTO.setNomeMedico(nome);
+			objMedicoDTO.setCRM(crm);
+			objMedicoDTO.setMunicipio(municipio);
+			objMedicoDTO.setStatusCRM(statusCRM);
+			objMedicoDTO.setEspecialidade(especialidade);
+			objMedicoDTO.setAreaAtuacao(areaAtuacao);
+
+			objMedicoDAO.insert(objMedicoDTO);
+		} else {
+			Toolkit.getDefaultToolkit().beep();
+			Alerts.showAlert("Informações inválidas!", null,"Preencha os campos corretamente!", Alert.AlertType.WARNING);
+		}
 	}
 
-	private void listarMedico(List<Medico> listaMedicos) {
+	private void listarMedico(List<MedicoDTO> listaMedicos) {
 		nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMedico"));
 		CRMColumn.setCellValueFactory(new PropertyValueFactory<>("CRM"));
 		municipioColumn.setCellValueFactory(new PropertyValueFactory<>("municipio"));
@@ -166,15 +183,16 @@ public class CadastroMedicoController {
 
 	private void listarValores() {
 		try	{
-			List<Medico> listaMedicos = new MedicoDAO().listarMedico();
+			List<MedicoDTO> listaMedicos = new MedicoDAO().listarMedico();
 			listarMedico(listaMedicos);
 		} catch (Exception e) {
+			Toolkit.getDefaultToolkit().beep();
 			Alerts.showAlert("Error", null,"VIEW TABLE" + e.getMessage(), Alert.AlertType.ERROR);
 		}
 	}
 
 	private void carregarCampos() {
-		Medico selectedMedico = tabelaMedico.getSelectionModel().getSelectedItem();
+		MedicoDTO selectedMedico = tabelaMedico.getSelectionModel().getSelectedItem();
 
 		if (selectedMedico != null) {
 			txtNome.setText(selectedMedico.getNomeMedico());
@@ -225,12 +243,12 @@ public class CadastroMedicoController {
 	}
 
 	private void updateMedico() {
-		Medico selectedMedico = tabelaMedico.getSelectionModel().getSelectedItem();
-		Medico objMedicoDTO = new MedicoDTO();
+		MedicoDTO selectedMedico = tabelaMedico.getSelectionModel().getSelectedItem();
+		MedicoDTO objMedicoDTO = new MedicoDTO();
 		MedicoDAO objMedicoDAO = new MedicoDAO();
 
 		if (selectedMedico != null && (!txtNome.getText().isEmpty() && !txtCRM.getText().isEmpty())) {
-			int idFuncionario = selectedMedico.getIdMedico();
+			int idFuncionario = selectedMedico.getId();
 			String nomeFuncionario = txtNome.getText();
 			String CRM = txtCRM.getText();
 			String situacaoCRM = CRMChoiceBox.getValue();
@@ -239,7 +257,7 @@ public class CadastroMedicoController {
 			String areaAtuacao = atuacaoChoiceBox.getValue();
 
 
-			objMedicoDTO.setIdMedico(idFuncionario);
+			objMedicoDTO.setId(idFuncionario);
 			objMedicoDTO.setNomeMedico(nomeFuncionario);
 			objMedicoDTO.setCRM(CRM);
 			objMedicoDTO.setStatusCRM(situacaoCRM);
@@ -249,21 +267,23 @@ public class CadastroMedicoController {
 
 			objMedicoDAO.update(objMedicoDTO);
 		}else {
+			Toolkit.getDefaultToolkit().beep();
 			Alerts.showAlert("Informações inválidas!", null,"Preencha os campos corretamente!", Alert.AlertType.WARNING);
 		}
 	}
 
 	private void deleteMedico() {
-		Medico selectedMedico = tabelaMedico.getSelectionModel().getSelectedItem();
-		Medico objMedicoDTO = new MedicoDTO();
+		MedicoDTO selectedMedico = tabelaMedico.getSelectionModel().getSelectedItem();
+		MedicoDTO objMedicoDTO = new MedicoDTO();
 		MedicoDAO objMedicoDAO = new MedicoDAO();
 
 		if (selectedMedico != null) {
-			int idFuncionario = selectedMedico.getIdMedico();
-			objMedicoDTO.setIdMedico(idFuncionario);
+			int idFuncionario = selectedMedico.getId();
+			objMedicoDTO.setId(idFuncionario);
 
 			objMedicoDAO.delete(objMedicoDTO);
 		}else {
+			Toolkit.getDefaultToolkit().beep();
 			Alerts.showAlert("Delete ERROR", null,"Unable to delete!", Alert.AlertType.ERROR);
 		}
 	}
@@ -298,10 +318,11 @@ public class CadastroMedicoController {
 
 		try	{
 			MedicoDAO objMedicoDAO = new MedicoDAO();
-			List<Medico> listaMedicos = objMedicoDAO.pesquisarMedico(pesquisa, municipio, crm, especialidade, area);
+			List<MedicoDTO> listaMedicos = objMedicoDAO.pesquisarMedico(pesquisa, municipio, crm, especialidade, area);
 
 			listarMedico(listaMedicos);
 		} catch (Exception e) {
+			Toolkit.getDefaultToolkit().beep();
 			Alerts.showAlert("Error", null,"PESQUISA" + e.getMessage(), Alert.AlertType.ERROR);
 		}
 	}
@@ -315,6 +336,7 @@ public class CadastroMedicoController {
 				municipio.add(municipioDTO.getNomeMunicipio());
 			}
 		} catch (Exception e) {
+			Toolkit.getDefaultToolkit().beep();
 			Alerts.showAlert("Error", null,"VIEW TABLE" + e.getMessage(), Alert.AlertType.ERROR);
 		}
 	}
@@ -328,6 +350,7 @@ public class CadastroMedicoController {
 				especialidade.add(especialidadeDTO.getNomeEspecialidade());
 			}
 		} catch (Exception e) {
+			Toolkit.getDefaultToolkit().beep();
 			Alerts.showAlert("Error", null, "VIEW TABLE" + e.getMessage(), Alert.AlertType.ERROR);
 		}
 	}
@@ -341,6 +364,7 @@ public class CadastroMedicoController {
 				areaAtuacao.add(areaDTO.getNomeArea());
 			}
 		} catch (Exception e) {
+			Toolkit.getDefaultToolkit().beep();
 			Alerts.showAlert("Error", null, "VIEW TABLE" + e.getMessage(), Alert.AlertType.ERROR);
 		}
 	}

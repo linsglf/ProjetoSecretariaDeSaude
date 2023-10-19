@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.awt.*;
+import java.awt.Toolkit;
 import java.util.List;
 
 public class AreaController {
@@ -45,11 +45,16 @@ public class AreaController {
     private void criarArea() {
         String nomeArea = areaTxtField.getText();
 
-        AreaDTO objAreaDTO = new AreaDTO();
-        objAreaDTO.setNomeArea(nomeArea);
+        if (!nomeArea.isEmpty()) {
+            AreaDTO objAreaDTO = new AreaDTO();
+            AreaDAO objAreaDAO = new AreaDAO();
 
-        AreaDAO objAreaDAO = new AreaDAO();
-        objAreaDAO.insert(objAreaDTO);
+            objAreaDTO.setNomeArea(nomeArea);
+            objAreaDAO.insert(objAreaDTO);
+        } else {
+            Toolkit.getDefaultToolkit().beep();
+            Alerts.showAlert("Error", null, "Preencha o campo", Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
